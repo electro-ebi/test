@@ -5,8 +5,9 @@ import hashlib
 import os
 import uuid
 import requests
+import pyperclip  # Importing the pyperclip library
 
-github_token = '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'
+github_token ='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'
 headers = {'Authorization': f'token {github_token}'}
 
 license_key_filename = "license_key.txt"
@@ -33,7 +34,10 @@ def get_virtual_id():
     #print("Virtual ID:", virtual_id)
     return virtual_id
 
-def calculate_radius(event=None):
+def copy_to_clipboard(text):
+    pyperclip.copy(text)
+
+def calculate_radius(event=None):  
     global entry
     global radius_var
     if entry:
@@ -141,7 +145,8 @@ def start():
     
     # Check for updates
     check_for_updates()
-    
+    # Copy the virtual ID to clipboard
+    copy_to_clipboard(virtual_id)
     if os.path.exists(license_key_filename):
         with open(license_key_filename, "r") as file:
             license_key_file = file.read().strip()
@@ -149,7 +154,7 @@ def start():
         if  license_key_file == generate_license_key(virtual_id) :
             create_gui()
         elif license_key_file:
-            provided_key = simpledialog.askstring("License Key", "Enter the license key:")
+            provided_key = simpledialog.askstring("License Key", "Enter the license key virtual id will be in clipboard:")
             if provided_key is not None:
                 with open(license_key_filename, "w") as file:
                         file.write(provided_key)
@@ -160,7 +165,7 @@ def start():
             else:
                 messagebox.showerror("License Key", "No license key provided. Please enter a valid license key.")
         else:
-            provided_key = simpledialog.askstring("License Key", "Enter the license key:")
+            provided_key = simpledialog.askstring("License Key", "Enter the license key virtual id will be in clipboard:")
             if provided_key is not None:
                 with open(license_key_filename, "w") as file:
                     file.write(provided_key)
@@ -171,7 +176,7 @@ def start():
             else:
                 messagebox.showerror("License Key", "No license key provided. Please enter a valid license key.")
     else:
-        provided_key = simpledialog.askstring("License Key", "Enter the license key:")
+        provided_key = simpledialog.askstring("License Key", "Enter the license key virtual id will be in clipboard:")
         if provided_key is not None:
             with open(license_key_filename, "w") as file:
                 file.write(provided_key)
@@ -180,9 +185,9 @@ def start():
             else:
                 messagebox.showerror("License Key", "Invalid license key. Please enter a valid license key.")
         
-        
-        
         else:
             messagebox.showerror("License Key", "No license key provided. Please enter a valid license key.")
+    
+    
 
 start()
