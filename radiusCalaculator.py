@@ -7,8 +7,7 @@ import uuid
 import requests
 import pyperclip  # Importing the pyperclip library
 
-github_token ='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'
-headers = {'Authorization': f'token {github_token}'}
+
 
 license_key_filename = ".license_key.txt"
 app_version = "1.0.0"
@@ -86,7 +85,7 @@ def save_data():
 
 def check_for_updates():
     try:
-        response = requests.get(github_repo_url, headers=headers)
+        response = requests.get(github_repo_url)
         response.raise_for_status()
         data = response.json()
         latest_version = data["tag_name"]
